@@ -27,8 +27,12 @@ public class PlayerGameController : MonoBehaviour
         if (other.gameObject.CompareTag("HiObstacle"))
         {
             Debug.Log("HiObstacle");
-            Destroy(Cubes[Cubes.Count].gameObject);
-            //Cubes.RemoveAll();
+            //Destroy(Cubes[Cubes.Count].gameObject);
+            for (int i = 0; i < Cubes.Count; i++)
+            {
+                Destroy(Cubes[Cubes.Count - 1].gameObject);
+            }
+            Cubes.Clear();
         }
 
     }
