@@ -10,6 +10,13 @@ public class PlayerGameController : MonoBehaviour
     public int score = 0;
     public GameObject losePanel, winPanel;
     public Text scoreText;
+    public Rigidbody myRb;
+    public float yForce = 7.0f;
+
+    private void Start()
+    {
+        myRb = this.GetComponent<Rigidbody>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -58,6 +65,12 @@ public class PlayerGameController : MonoBehaviour
             }
             Cubes.Clear();
         }
+        if (other.gameObject.CompareTag("JumpArea"))
+        {
+            Debug.Log("JumpArea");
+            myRb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+            //StartCoroutine(Jump());
+        }
         /*
         else
         {
@@ -65,5 +78,12 @@ public class PlayerGameController : MonoBehaviour
             //losePanel.SetActive(true);
         }
         */
+    }
+    IEnumerator Jump()
+    {
+        
+        //transform.position += new Vector3(0, 2, 0);
+        yield return null;
+        //transform.position -= new Vector3(0, 2, 0);
     }
 }
