@@ -10,17 +10,12 @@ public class PlayerGameController : MonoBehaviour
     public int score = 0;
     public GameObject losePanel, winPanel;
     public Text scoreText;
-
-
-
     public Rigidbody myRb;
-    public float yForce = 7.0f;
 
     private void Start()
     {
         myRb = this.GetComponent<Rigidbody>();
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Collectable"))
@@ -45,22 +40,16 @@ public class PlayerGameController : MonoBehaviour
             {
                 Destroy(Cubes[Cubes.Count - 1].gameObject);
                 Cubes.RemoveAt(Cubes.Count - 1);
-
             }
-
         }
-
         else if (Cubes.Count <= 0)
         {
             Debug.Log("Fail");
-            //losePanel.SetActive(true);
+            losePanel.SetActive(true);
         }
-
-        
         if (other.gameObject.CompareTag("HiObstacle") && Cubes.Count > 0)
         {
             score = 0;
-            Debug.Log("HiObstacle");
             //Destroy(Cubes[Cubes.Count].gameObject);
             foreach (var item in Cubes)
             {
@@ -70,8 +59,6 @@ public class PlayerGameController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("JumpArea"))
         {
-            Debug.Log("JumpArea");
-            //myRb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
             StartCoroutine(Jump());
         }
         /*
@@ -81,9 +68,14 @@ public class PlayerGameController : MonoBehaviour
             //losePanel.SetActive(true);
         }
         */
+        if (other.gameObject.CompareTag("Finish") && score > 0)
+        {
+            Debug.Log("Finish");
+            winPanel.SetActive(true);
+        }
     }
     IEnumerator Jump()
-    {  
+    {
         myRb.velocity += new Vector3(0, 8, 0);
         yield return null;
     }
