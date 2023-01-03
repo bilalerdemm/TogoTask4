@@ -18,5 +18,18 @@ public class PlayerGameController : MonoBehaviour
             other.gameObject.transform.position = spawnPoint.position + new Vector3(0, 1, 0) * Cubes.Count;
 
         }
+        if (other.gameObject.CompareTag("LowObstacle"))
+        {
+            Debug.Log("LowObstacle");
+            Destroy(Cubes[Cubes.Count - 1].gameObject);
+            Cubes.RemoveAt(Cubes.Count - 1);
+        }
+        if (other.gameObject.CompareTag("HiObstacle"))
+        {
+            Debug.Log("HiObstacle");
+            Destroy(Cubes[Cubes.Count].gameObject);
+            //Cubes.RemoveAll();
+        }
+
     }
 }
