@@ -11,6 +11,7 @@ public class PlayerGameController : MonoBehaviour
     public GameObject losePanel, winPanel;
     public Text scoreText;
     public Rigidbody myRb;
+    public GameObject bigExplasionParticle, smallExplasionParticle, finishParticle;
 
     private void Start()
     {
@@ -30,6 +31,7 @@ public class PlayerGameController : MonoBehaviour
         if (other.gameObject.CompareTag("LowObstacle") && Cubes.Count > 0)
         {
             score = score - 1;
+            smallExplasionParticle.SetActive(true);
             if (score < 0)
             {
                 losePanel.SetActive(true);
@@ -50,6 +52,7 @@ public class PlayerGameController : MonoBehaviour
         if (other.gameObject.CompareTag("HiObstacle") && Cubes.Count > 0)
         {
             score = 0;
+            bigExplasionParticle.SetActive(true);
             //Destroy(Cubes[Cubes.Count].gameObject);
             foreach (var item in Cubes)
             {
@@ -71,6 +74,7 @@ public class PlayerGameController : MonoBehaviour
         if (other.gameObject.CompareTag("Finish") && score > 0)
         {
             Debug.Log("Finish");
+            finishParticle.SetActive(true);
             winPanel.SetActive(true);
         }
     }
