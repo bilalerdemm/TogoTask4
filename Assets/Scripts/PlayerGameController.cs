@@ -13,26 +13,39 @@ public class PlayerGameController : MonoBehaviour
         if (other.gameObject.CompareTag("Collectable"))
         {
             //Debug.Log("Girdi");
+            score++;
             Cubes.Add(other.gameObject);
             other.gameObject.transform.SetParent(transform);
             other.gameObject.transform.position = spawnPoint.position + new Vector3(0, 1, 0) * Cubes.Count;
 
         }
-        if (other.gameObject.CompareTag("LowObstacle"))
+        if (other.gameObject.CompareTag("LowObstacle") && Cubes.Count > 0)
         {
+            score--;
+            Debug.Log(Cubes.Count);
             Debug.Log("LowObstacle");
             Destroy(Cubes[Cubes.Count - 1].gameObject);
             Cubes.RemoveAt(Cubes.Count - 1);
         }
-        if (other.gameObject.CompareTag("HiObstacle"))
+        else
         {
+            Debug.Log("Fail");
+        }
+
+        if (other.gameObject.CompareTag("HiObstacle") && Cubes.Count > 0)
+        {
+            score = 0;
             Debug.Log("HiObstacle");
             //Destroy(Cubes[Cubes.Count].gameObject);
-            for (int i = 0; i < Cubes.Count; i++)
+            foreach (var item in Cubes)
             {
-                Destroy(Cubes[Cubes.Count - 1].gameObject);
+                Destroy(item.gameObject);
             }
             Cubes.Clear();
+        }
+        else
+        {
+            Debug.Log("Fail");
         }
 
     }
