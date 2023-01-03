@@ -10,6 +10,9 @@ public class PlayerGameController : MonoBehaviour
     public int score = 0;
     public GameObject losePanel, winPanel;
     public Text scoreText;
+
+
+
     public Rigidbody myRb;
     public float yForce = 7.0f;
 
@@ -68,8 +71,8 @@ public class PlayerGameController : MonoBehaviour
         if (other.gameObject.CompareTag("JumpArea"))
         {
             Debug.Log("JumpArea");
-            myRb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
-            //StartCoroutine(Jump());
+            //myRb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+            StartCoroutine(Jump());
         }
         /*
         else
@@ -80,10 +83,8 @@ public class PlayerGameController : MonoBehaviour
         */
     }
     IEnumerator Jump()
-    {
-        
-        //transform.position += new Vector3(0, 2, 0);
+    {  
+        myRb.velocity += new Vector3(0, 8, 0);
         yield return null;
-        //transform.position -= new Vector3(0, 2, 0);
     }
 }
