@@ -12,6 +12,13 @@ public class PlayerGameController : MonoBehaviour
     public Text scoreText;
     public Rigidbody myRb;
     public GameObject bigExplasionParticle, smallExplasionParticle, finishParticle;
+    public static PlayerGameController instance;
+    public bool isGameWin =false;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -74,8 +81,14 @@ public class PlayerGameController : MonoBehaviour
         if (other.gameObject.CompareTag("Finish") && score > 0)
         {
             Debug.Log("Finish");
+            foreach (var item in Cubes)
+            {
+                Destroy(item.gameObject);
+            }
+            Cubes.Clear();
             finishParticle.SetActive(true);
             winPanel.SetActive(true);
+            isGameWin = true;
         }
     }
     IEnumerator Jump()
