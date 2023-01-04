@@ -17,6 +17,14 @@ public class PlayerGameController : MonoBehaviour
 
     private void Awake() => instance = this;
     private void Start() => myRb = this.GetComponent<Rigidbody>();
+    private void Update()
+    {
+        if (score == -1)
+        {
+            losePanel.SetActive(true);
+            PlayerMove.instance.speed = 0;
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,13 +37,14 @@ public class PlayerGameController : MonoBehaviour
             other.gameObject.transform.position = spawnPoint.position + new Vector3(0, 1, 0) * Cubes.Count;
 
         }
-        if (other.gameObject.CompareTag("LowObstacle") && Cubes.Count > 0)
+        if (other.gameObject.CompareTag("LowObstacle") && Cubes.Count >= 0)
         {
-            score--;
+            score -= 1;
             smallExplasionParticle.SetActive(true);
             if (score < 0)
             {
                 losePanel.SetActive(true);
+                PlayerMove.instance.speed = 0;
             }
             Debug.Log(Cubes.Count);
             Debug.Log("LowObstacle");
@@ -44,53 +53,77 @@ public class PlayerGameController : MonoBehaviour
                 //Destroy(Cubes[Cubes.Count - 1].gameObject);
                 Destroy(Cubes.GetLastMember());
                 Cubes.RemoveAt(Cubes.Count - 1);
-                
+
             }
         }
+        /*
         else if (Cubes.Count <= 0)
         {
             Debug.Log("Fail");
-            losePanel.SetActive(true);
+            //losePanel.SetActive(true);
         }
-        if (other.gameObject.CompareTag("HiObstacle") && Cubes.Count > 0)
+        */
+        if (other.gameObject.CompareTag("HiObstacle") && Cubes.Count >= 0)
         {
-            score = 0;
-            bigExplasionParticle.SetActive(true);
-            foreach (var item in Cubes)
+            score--;
+            if (score > 0)
             {
-                Destroy(item.gameObject);
+                bigExplasionParticle.SetActive(true);
+                foreach (var item in Cubes)
+                {
+                    Destroy(item.gameObject);
+                }
+                Cubes.Clear();
+                score = 0;
             }
-            Cubes.Clear();
+            else
+            {
+                losePanel.SetActive(true);
+                PlayerMove.instance.speed = 0;
+            }
+
         }
+        /*
         if (other.gameObject.CompareTag("JumpArea"))
         {
             StartCoroutine(Jump());
         }
-
-        if (other.gameObject.CompareTag("Finish") && score > 0)
+        */
+        if (other.gameObject.CompareTag("Finish") && score >= 0)
         {
-            Debug.Log("Finish");
-            foreach (var item in Cubes)
+            if (score > 0)
             {
-                Destroy(item.gameObject);
+                Debug.Log("Finish");
+                foreach (var item in Cubes)
+                {
+                    Destroy(item.gameObject);
+                }
+                Cubes.Clear();
+                finishParticle.SetActive(true);
+                winPanel.SetActive(true);
+                isGameWin = true;
             }
-            Cubes.Clear();
-            finishParticle.SetActive(true);
-            winPanel.SetActive(true);
-            isGameWin = true;
+            else
+            {
+                losePanel.SetActive(true);
+                PlayerMove.instance.speed= 0;
+            }
+
         }
     }
+    /*
     IEnumerator Jump()
     {
         myRb.velocity += new Vector3(0, 8, 0);
         yield return null;
     }
+    */
 }
 
 public static class PlayerExtensions
 {
-    public static GameObject GetLastMember(this List<GameObject> Cubes )
+    public static GameObject GetLastMember(this List<GameObject> Cubes)
     {
-    return Cubes[Cubes.Count - 1];
+        return Cubes[Cubes.Count - 1];
     }
 }
