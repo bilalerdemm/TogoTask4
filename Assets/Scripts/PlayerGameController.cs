@@ -41,8 +41,10 @@ public class PlayerGameController : MonoBehaviour
             Debug.Log("LowObstacle");
             if (Cubes.Count > 0)
             {
-                Destroy(Cubes[Cubes.Count - 1].gameObject);
+                //Destroy(Cubes[Cubes.Count - 1].gameObject);
+                Destroy(Cubes.GetLastMember());
                 Cubes.RemoveAt(Cubes.Count - 1);
+                
             }
         }
         else if (Cubes.Count <= 0)
@@ -82,5 +84,13 @@ public class PlayerGameController : MonoBehaviour
     {
         myRb.velocity += new Vector3(0, 8, 0);
         yield return null;
+    }
+}
+
+public static class PlayerExtensions
+{
+    public static GameObject GetLastMember(this List<GameObject> Cubes )
+    {
+    return Cubes[Cubes.Count - 1];
     }
 }
