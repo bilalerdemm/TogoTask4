@@ -41,7 +41,7 @@ public class PlayerMove : MonoBehaviour, IDragHandler
             myPlayer.gameObject.transform.Translate(0, 0, speed * Time.deltaTime);
             if (PlayerGameController.instance.isGameWin == true)
             {
-                myPlayer.gameObject.transform.Translate(0, 0, 0 * Time.deltaTime);
+                speed = 0;
                 playerAnim.SetBool("isWin", true);
             }
         }

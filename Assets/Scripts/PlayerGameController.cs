@@ -13,17 +13,11 @@ public class PlayerGameController : MonoBehaviour
     public Rigidbody myRb;
     public GameObject bigExplasionParticle, smallExplasionParticle, finishParticle;
     public static PlayerGameController instance;
-    public bool isGameWin =false;
+    public bool isGameWin = false;
 
-    private void Awake()
-    {
-        instance = this;
-    }
+    private void Awake() => instance = this;
+    private void Start() => myRb = this.GetComponent<Rigidbody>();
 
-    private void Start()
-    {
-        myRb = this.GetComponent<Rigidbody>();
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Collectable"))
@@ -37,7 +31,7 @@ public class PlayerGameController : MonoBehaviour
         }
         if (other.gameObject.CompareTag("LowObstacle") && Cubes.Count > 0)
         {
-            score = score - 1;
+            score--;
             smallExplasionParticle.SetActive(true);
             if (score < 0)
             {
@@ -60,7 +54,6 @@ public class PlayerGameController : MonoBehaviour
         {
             score = 0;
             bigExplasionParticle.SetActive(true);
-            //Destroy(Cubes[Cubes.Count].gameObject);
             foreach (var item in Cubes)
             {
                 Destroy(item.gameObject);
@@ -71,13 +64,7 @@ public class PlayerGameController : MonoBehaviour
         {
             StartCoroutine(Jump());
         }
-        /*
-        else
-        {
-            Debug.Log("Fail");
-            //losePanel.SetActive(true);
-        }
-        */
+
         if (other.gameObject.CompareTag("Finish") && score > 0)
         {
             Debug.Log("Finish");
