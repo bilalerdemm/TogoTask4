@@ -39,10 +39,14 @@ public class PlayerMove : MonoBehaviour, IDragHandler
         {
             playerAnim.SetBool("isRunning", true);
             myPlayer.gameObject.transform.Translate(0, 0, speed * Time.deltaTime);
-            if (PlayerGameController.instance.isGameWin == true)
+            if (PlayerGameController.instance.isGameWin)
             {
                 speed = 0;
                 playerAnim.SetBool("isWin", true);
+            }
+            if (PlayerGameController.instance.isGameLose)
+            {
+                playerAnim.SetBool("isLose", true);
             }
         }
     }

@@ -13,7 +13,7 @@ public class PlayerGameController : MonoBehaviour
     public Rigidbody myRb;
     public GameObject bigExplasionParticle, smallExplasionParticle, finishParticle;
     public static PlayerGameController instance;
-    public bool isGameWin = false;
+    public bool isGameWin = false, isGameLose = false;
 
     private void Awake() => instance = this;
     private void Start() => myRb = this.GetComponent<Rigidbody>();
@@ -25,12 +25,28 @@ public class PlayerGameController : MonoBehaviour
             PlayerMove.instance.speed = 0;
         }
     }
-
+    public void LoseAction()
+    {
+        losePanel.SetActive(true);
+        PlayerMove.instance.speed = 0;
+        isGameLose = true;
+    }
+    public void WinAction()
+    {
+        Debug.Log("Finish");
+        foreach (var item in Cubes)
+        {
+            Destroy(item.gameObject);
+        }
+        Cubes.Clear();
+        finishParticle.SetActive(true);
+        winPanel.SetActive(true);
+        isGameWin = true;
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Collectable"))
         {
-            //Debug.Log("Girdi");
             score++;
             Cubes.Add(other.gameObject);
             other.gameObject.transform.SetParent(transform);
@@ -43,8 +59,7 @@ public class PlayerGameController : MonoBehaviour
             smallExplasionParticle.SetActive(true);
             if (score < 0)
             {
-                losePanel.SetActive(true);
-                PlayerMove.instance.speed = 0;
+                LoseAction();
             }
             Debug.Log(Cubes.Count);
             Debug.Log("LowObstacle");
@@ -56,13 +71,6 @@ public class PlayerGameController : MonoBehaviour
 
             }
         }
-        /*
-        else if (Cubes.Count <= 0)
-        {
-            Debug.Log("Fail");
-            //losePanel.SetActive(true);
-        }
-        */
         if (other.gameObject.CompareTag("HiObstacle") && Cubes.Count >= 0)
         {
             score--;
@@ -78,46 +86,24 @@ public class PlayerGameController : MonoBehaviour
             }
             else
             {
-                losePanel.SetActive(true);
-                PlayerMove.instance.speed = 0;
+                LoseAction();
             }
 
         }
-        /*
-        if (other.gameObject.CompareTag("JumpArea"))
-        {
-            StartCoroutine(Jump());
-        }
-        */
+
         if (other.gameObject.CompareTag("Finish") && score >= 0)
         {
             if (score > 0)
             {
-                Debug.Log("Finish");
-                foreach (var item in Cubes)
-                {
-                    Destroy(item.gameObject);
-                }
-                Cubes.Clear();
-                finishParticle.SetActive(true);
-                winPanel.SetActive(true);
-                isGameWin = true;
+                WinAction();
             }
             else
             {
-                losePanel.SetActive(true);
-                PlayerMove.instance.speed= 0;
+                LoseAction();
             }
 
         }
     }
-    /*
-    IEnumerator Jump()
-    {
-        myRb.velocity += new Vector3(0, 8, 0);
-        yield return null;
-    }
-    */
 }
 
 public static class PlayerExtensions
