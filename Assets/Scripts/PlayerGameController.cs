@@ -11,7 +11,7 @@ public class PlayerGameController : MonoBehaviour
     public GameObject losePanel, winPanel;
     public Text scoreText;
     public Rigidbody myRb;
-    public GameObject bigExplasionParticle, smallExplasionParticle, finishParticle;
+    public GameObject bigExplasionParticle, smallExplasionParticle, finishParticle,scoreObject;
     public static PlayerGameController instance;
     public bool isGameWin = false, isGameLose = false;
 
@@ -19,6 +19,7 @@ public class PlayerGameController : MonoBehaviour
     private void Start() => myRb = this.GetComponent<Rigidbody>();
     private void Update()
     {
+        scoreText.text = score.ToString();
         if (score == -1)
         {
             losePanel.SetActive(true);
@@ -28,6 +29,7 @@ public class PlayerGameController : MonoBehaviour
     public void LoseAction()
     {
         losePanel.SetActive(true);
+        scoreObject.SetActive(true);
         PlayerMove.instance.speed = 0;
         isGameLose = true;
     }
@@ -41,6 +43,7 @@ public class PlayerGameController : MonoBehaviour
         Cubes.Clear();
         finishParticle.SetActive(true);
         winPanel.SetActive(true);
+        scoreObject.SetActive(true);
         isGameWin = true;
     }
     private void OnTriggerEnter(Collider other)
