@@ -11,7 +11,7 @@ public class PlayerGameController : MonoBehaviour
     public GameObject losePanel, winPanel;
     public Text scoreText;
     public Rigidbody myRb;
-    public GameObject bigExplasionParticle, smallExplasionParticle, finishParticle,scoreObject;
+    public GameObject bigExplasionParticle, smallExplasionParticle, finishParticle,scoreObject,restartButton;
     public static PlayerGameController instance;
     public bool isGameWin = false, isGameLose = false;
 
@@ -32,6 +32,7 @@ public class PlayerGameController : MonoBehaviour
         scoreObject.SetActive(true);
         PlayerMove.instance.speed = 0;
         isGameLose = true;
+        restartButton.SetActive(true);
     }
     public void WinAction()
     {
@@ -45,6 +46,7 @@ public class PlayerGameController : MonoBehaviour
         winPanel.SetActive(true);
         scoreObject.SetActive(true);
         isGameWin = true;
+        restartButton.SetActive(true);
     }
     private void OnTriggerEnter(Collider other)
     {
