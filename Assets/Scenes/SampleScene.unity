@@ -2358,6 +2358,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8974508213577803509, guid: ba7294644ad4aa34789374056f20a76b, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9100643629613811072, guid: ba7294644ad4aa34789374056f20a76b, type: 3}
       propertyPath: winPanel
       value: 
@@ -2378,5 +2382,13 @@ PrefabInstance:
       propertyPath: restartButton
       value: 
       objectReference: {fileID: 1243928454}
+    - target: {fileID: 9100643629817246521, guid: ba7294644ad4aa34789374056f20a76b, type: 3}
+      propertyPath: OnlyDeactivate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9213517261870860481, guid: ba7294644ad4aa34789374056f20a76b, type: 3}
+      propertyPath: OnlyDeactivate
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba7294644ad4aa34789374056f20a76b, type: 3}
